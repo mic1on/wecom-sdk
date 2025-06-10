@@ -1,3 +1,4 @@
+from typing import TypeVar
 from pydantic import BaseModel, ConfigDict
 
 
@@ -11,3 +12,17 @@ class BaseSchema(BaseModel):
         coerce_numbers_to_str=True,
         arbitrary_types_allowed=True,
     )
+
+
+class BaseResponse(BaseSchema):
+    errcode: int
+    errmsg: str
+
+
+T = TypeVar("T")
+
+class BasePaginationResponse(BaseResponse):
+    total: int
+    has_more: bool
+    next: int
+    records: list[T]

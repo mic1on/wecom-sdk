@@ -26,12 +26,12 @@ class UpdateDepartmentParams(CreateDepartmentParams): ...
 
 class UpdateDepartmentInfo(BaseSchema):
     errcode: int
-    errmsg: AnyStr
+    errmsg: str
 
 
 class CreateDepartmentInfo(BaseSchema):
     errcode: int
-    errmsg: AnyStr
+    errmsg: str
     id: int
 
 
@@ -41,18 +41,18 @@ class DepartmentInfo(BaseSchema):
     """
 
     id: int
-    name: AnyStr
-    name_en: AnyStr | None = None
+    name: str
+    name_en: str | None = None
     department_leader: List[str] | None = None
     parentid: int | None = None
     order: int | None = None
 
 
-class DepartmentInfo(BaseSchema):
+class AllDepartmentInfo(BaseSchema):
     """
     部门整体响应数据
     """
 
     errcode: int
-    errmsg: AnyStr
+    errmsg: str
     department: List[DepartmentInfo]
