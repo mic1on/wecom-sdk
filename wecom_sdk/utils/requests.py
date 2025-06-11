@@ -1,5 +1,7 @@
 import httpx
 
+from wecom_sdk.exceptions.general import SDKException
+
 
 class HttpxRequest:
     @classmethod
@@ -15,8 +17,13 @@ class HttpxRequest:
         """
         async with httpx.AsyncClient() as client:
             response = await client.get(url, params=params, headers=headers)
-            response.raise_for_status()
-        return response.json()
+            try:
+                response_data = response.json()
+                if 'errcode' in response_data and response_data['errcode'] != 0:
+                    raise SDKException(response_data.get('errcode', -1), response_data.get('errmsg', 'Unknown error'))
+                return response_data
+            except ValueError:
+                raise SDKException(-1, 'Failed to parse response')
 
     @classmethod
     async def post(
@@ -38,5 +45,10 @@ class HttpxRequest:
             response = await client.post(
                 url, params=params, data=data, json=json, headers=headers
             )
-            response.raise_for_status()
-            return response.json()
+            try:
+                response_data = response.json()
+                if 'errcode' in response_data and response_data['errcode'] != 0:
+                    raise SDKException(response_data.get('errcode', -1), response_data.get('errmsg', 'Unknown error'))
+                return response_data
+            except ValueError:
+                raise SDKException(-1, 'Failed to parse response')

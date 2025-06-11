@@ -131,6 +131,7 @@ venv/
 ENV/
 env.bak/
 venv.bak/
+pytest.ini
 
 # Spyder project settings
 .spyderproject

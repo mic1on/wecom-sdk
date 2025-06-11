@@ -1,4 +1,4 @@
-from typing import TypeVar
+from typing import TypeVar, Generic
 from pydantic import BaseModel, ConfigDict
 
 
@@ -21,7 +21,7 @@ class BaseResponse(BaseSchema):
 
 T = TypeVar("T")
 
-class BasePaginationResponse(BaseResponse):
+class BasePaginationResponse(BaseResponse, Generic[T]):
     total: int
     has_more: bool
     next: int
